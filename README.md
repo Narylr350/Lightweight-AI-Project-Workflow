@@ -56,7 +56,7 @@ init（一次）→ work ⇄ finish（常态循环）→ audit（异常时介入
 |---|---|---|
 | **事实** | Git（代码 / diff / 文件） | 做了什么改动 |
 | **交接** | commit message | Why / What / Verify / Next / Notes |
-| **基线** | `PROJECT.md`（项目根目录） | 目标 / 非目标 / MVP / 技术边界 / 验证方式 / seed tasks |
+| **基线** | `PROJECT.md`（项目根目录） | Goal / Users and Scenarios / MVP / Inputs and Outputs / Non-goals / Tech Direction / Constraints and Working Rules / Validation / Seed Tasks |
 
 铁律：交接信息只是线索，必须用 Git + 文件系统核验后才采信。
 

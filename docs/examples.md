@@ -8,19 +8,42 @@
 
 假设项目：一个命令行 todo 工具（个人使用）。
 
+技术方向决策过程（用户确认前，AI 在回复中展示）：
+
+```
+候选 A：Python + 标准库
+  适用场景：单人 CLI，数据量小，无网络依赖
+  代价：无第三方依赖，但 CLI 参数解析需手写或用 argparse
+  不选原因：无（除非用户已熟悉其他语言）
+  推荐：是——符合单人、本地、零依赖需求
+
+候选 B：Python + click/rich
+  适用场景：需要复杂子命令或彩色输出
+  代价：引入第三方依赖，打包变复杂
+  不选原因：MVP 不需要复杂输出
+  推荐：否
+
+候选 C：Node.js
+  适用场景：用户更熟 JS，或后续可能做 Web 版
+  代价：与用户当前环境不一致
+  不选原因：用户未表达 JS 偏好
+  推荐：否
+
+需用户确认：语言选 Python（标准库），存储用单 JSON 文件。
+```
+
+用户确认后的 PROJECT.md：
+
 ```markdown
 # Todo CLI
 
-## 目标
+## Goal
 
 一个命令行 todo 工具，支持快速添加、列出、完成、删除任务。本地存储，无网络依赖。
 
-## 非目标
+## Users and Scenarios
 
-- 不做云同步
-- 不做团队协作
-- 不做 GUI（第一版）
-- 不做提醒/通知
+单人使用。场景：在终端快速记录待办，完成后标记，不依赖云端。
 
 ## MVP
 
@@ -28,28 +51,51 @@
 - `todo list` 列出未完成
 - `todo done <id>` 标记完成
 - `todo del <id>` 删除
-- 数据存 `~/.todo.json`
 
-## 技术边界
+## Inputs and Outputs
+
+- 输入：命令行参数（子命令 + 任务文本 / id）
+- 输出：终端文本（任务列表 / 操作确认）
+- 数据来源：用户手动输入
+- 数据存储：本地 `~/.todo.json`
+
+## Non-goals
+
+- 不做云同步
+- 不做团队协作
+- 不做 GUI（第一版）
+- 不做提醒/通知
+
+## Tech Direction
 
 - 语言：Python 3.10+
 - 依赖：仅标准库，不引入第三方包
 - 存储：单 JSON 文件，无数据库
 - 平台：Windows / macOS / Linux
 
-## 验证方式
+（用户确认：Python 标准库 + JSON 文件存储。AI 曾推荐 Python，候选含 Node.js，用户选 Python。）
+
+## Constraints and Working Rules
+
+- 不引入第三方包
+- 单 JSON 文件存储，不用数据库
+- 跨平台运行
+
+## Validation
 
 - 手动跑命令验证功能
 - `python -m todo add test && python -m todo list` 看输出
 - 无自动化测试要求（个人项目，MVP 阶段）
 
-## seed tasks
+## Seed Tasks
 
 1. 搭建项目结构：`todo/__main__.py` + `todo/cli.py` + `todo/storage.py`
 2. 实现 storage.py：读写 `~/.todo.json`，CRUD 基础
 3. 实现 cli.py：add / list / done / del 四个子命令
 4. 手动验证完整流程
 ```
+
+注意：范例中展示的候选方案分析只出现在 project-init 的回复中，不写入 PROJECT.md。PROJECT.md 只记录用户确认后的选择。
 
 ---
 
