@@ -1,9 +1,9 @@
-# Project Init
-
 ---
 name: project-init
 description: 用于新项目初始化或给已有项目建立轻量 AI 工作基线。触发于：新项目第一天、已有项目无 PROJECT.md、项目方向大改需重建基线。产出 PROJECT.md 含目标/非目标/MVP/技术边界/AI风险/验证方式/seed tasks。
 ---
+
+# Project Init
 
 ## 用途
 

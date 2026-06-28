@@ -1,9 +1,9 @@
-# Project Work
-
 ---
 name: project-work
 description: 日常主入口。根据用户需求和项目状态判断本轮任务类型（新功能/修bug/复盘/黑盒观察/文档同步/release收尾/提交前整理/需求变化/继续上次），以最小范围推进。开工前先读 PROJECT.md 和最近 commit 的 Next，再用 git 核验真实状态。
 ---
+
+# Project Work
 
 ## 用途
 
