@@ -4,7 +4,20 @@
 
 ---
 
-## 1. 轻量优先
+## 1. Decision Ownership（决策归属）
+
+AI owns execution. User owns decisions.
+
+- AI 可以分析、提出候选方案、比较取舍、给出推荐、执行已确认范围内的任务。
+- AI 不能替用户决定项目目标、MVP、Non-goals、技术方向、长期基线、release、commit、tag、push、破坏性操作。
+- **AI recommendations are not decisions.** 推荐不等于拍板，用户确认后才算决策。
+- **AI assumptions are not baseline facts.** 未确认内容只能写成 Assumptions / Pending Questions，不能写成基线事实。
+- `PROJECT.md` 只能记录已确认决策、已确认约束和可核验项目事实。
+- 减少确认疲劳：只在决策点确认，不在已确认范围内的普通执行步骤反复确认。
+
+---
+
+## 2. 轻量优先
 
 避免重流程常态化。
 
@@ -17,7 +30,7 @@
 
 ---
 
-## 2. Git 是主要事实源
+## 3. Git 是主要事实源
 
 代码和文件是唯一可核验的事实。
 
@@ -29,19 +42,19 @@
 
 ---
 
-## 3. 三层事实模型
+## 4. 三层事实模型
 
 | 层 | 载体 | 记什么 | 谁写 | 更新频率 |
 |---|---|---|---|---|
 | **事实** | Git（代码 / diff / 文件） | 做了什么改动 | 人 + AI | 每次改动 |
 | **交接** | commit message | Why / What / Verify / Next / Notes | project-finish 生成 | 每次提交 |
-| **基线** | `PROJECT.md`（项目根目录） | 目标 / 非目标 / MVP / 技术边界 / AI 风险 / 验证方式 / seed tasks | project-init 创建，project-finish 必要时更新 | 基线变化时 |
+| **基线** | `PROJECT.md`（项目根目录） | 目标 / 非目标 / MVP / 技术边界 / 验证方式 / seed tasks | project-init 创建，project-finish 必要时更新 | 基线变化时 |
 
 **铁律**：上层依赖下层。交接信息必须用事实层核验；基线变化必须反映到事实层。
 
 ---
 
-## 4. commit message 是交接载体
+## 5. commit message 是交接载体
 
 不是日记，不是 changelog，是给下一个 session（人或 AI）的交接条。
 
@@ -52,7 +65,7 @@
 
 ---
 
-## 5. 文档只保存长期基线
+## 6. 文档只保存长期基线
 
 不保存流水账。
 
@@ -63,7 +76,7 @@
 
 ---
 
-## 6. handoff 只是线索
+## 7. handoff 只是线索
 
 任何交接信息（commit Next / 对话 summary / handoff notes）都可能：
 
@@ -77,7 +90,7 @@ project-audit 专门检查交接信息与 Git 事实是否一致。
 
 ---
 
-## 7. 用户当前需求优先于旧计划
+## 8. 用户当前需求优先于旧计划
 
 但不偷偷改基线。
 
@@ -88,7 +101,7 @@ project-audit 专门检查交接信息与 Git 事实是否一致。
 
 ---
 
-## 8. 入口最小化
+## 9. 入口最小化
 
 对外只保留 4 个 skill：
 
@@ -101,7 +114,7 @@ project-audit 专门检查交接信息与 Git 事实是否一致。
 
 ---
 
-## 9. 小任务不做全流程
+## 10. 小任务不做全流程
 
 不是每轮都要走完 init → work → finish → audit。
 

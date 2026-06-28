@@ -4,6 +4,8 @@
 
 让 AI 能低成本完成项目初始化、日常推进、需求变化处理、收尾记录和必要复盘。
 
+**Decision Ownership：** AI 负责推进与执行，用户负责关键判断与拍板。AI 可以分析、提候选方案、推荐、执行已确认范围内的任务；不能替用户决定项目目标、MVP、Non-goals、技术方向、长期基线、release、commit、tag、push。这个 pack 不是 AI 全权接管项目。
+
 ---
 
 ## 这是什么
@@ -54,7 +56,7 @@ init（一次）→ work ⇄ finish（常态循环）→ audit（异常时介入
 |---|---|---|
 | **事实** | Git（代码 / diff / 文件） | 做了什么改动 |
 | **交接** | commit message | Why / What / Verify / Next / Notes |
-| **基线** | `PROJECT.md`（项目根目录） | 目标 / 非目标 / MVP / 技术边界 / AI 风险 / 验证方式 / seed tasks |
+| **基线** | `PROJECT.md`（项目根目录） | 目标 / 非目标 / MVP / 技术边界 / 验证方式 / seed tasks |
 
 铁律：交接信息只是线索，必须用 Git + 文件系统核验后才采信。
 
@@ -88,6 +90,7 @@ AI 会根据 skill 的 `description` 自动判断何时触发对应 skill。
 
 ## 核心原则摘要
 
+- AI owns execution, user owns decisions（决策归属）
 - 轻量优先，避免重流程常态化
 - Git 是主要事实源
 - commit message 是交接载体，不是日记
