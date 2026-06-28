@@ -45,7 +45,7 @@ description: 用于新项目初始化或给已有项目建立轻量 AI 工作基
 
 ### 不写代码，不建脚手架
 
-project-init 只产出文档。代码交给 project-write 写。不要在 init 阶段创建 `src/`、`package.json`、`main.py` 等。
+project-init 只产出文档。代码交给 project-work 写。不要在 init 阶段创建 `src/`、`package.json`、`main.py` 等。
 
 ### seed tasks 是启动用，不是任务列表
 
