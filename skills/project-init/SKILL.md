@@ -192,7 +192,7 @@ AI 必须显式区分 4 层，防止把理解当事实：
 
 AI 推荐不等于决定。用户未确认前，技术方向不写入 .ai/PROJECT.md。未确认的 Tech Direction 必须标为"待确认推荐"：
 
-> Tech Direction：待确认推荐为 Python + PySide6，理由是……
+> Tech Direction：待确认推荐为方案 A，理由是……
 
 用户明确确认后，才可以写入 .ai/PROJECT.md 的 Tech Direction。
 
