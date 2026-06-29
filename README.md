@@ -35,7 +35,7 @@
 
 | Skill | 一句话 | 何时触发 |
 |---|---|---|
-| **project-init** | 新项目初始化或建立基线 | 新项目第一天 / 无 PROJECT.md / 方向大改 |
+| **project-init** | 新项目初始化或建立基线 | 新项目第一天 / 无 .ai/PROJECT.md / 方向大改 |
 | **project-work** | 日常主入口，判断任务类型后最小范围推进 | 每次开工 |
 | **project-finish** | 收尾检查 + 生成结构化 commit message | 一轮工作结束准备提交前 |
 | **project-audit** | 低频复盘诊断，默认只读不改 | 多轮失败 / 用户喊停 / release 前 / 接手冲突 |
@@ -56,7 +56,7 @@ init（一次）→ work ⇄ finish（常态循环）→ audit（异常时介入
 |---|---|---|
 | **事实** | Git（代码 / diff / 文件） | 做了什么改动 |
 | **交接** | commit message | Why / What / Verify / Next / Notes |
-| **基线** | `PROJECT.md`（项目根目录） | Goal / Users and Scenarios / MVP / Inputs and Outputs / Non-goals / Tech Direction / Constraints and Working Rules / Validation / Seed Tasks |
+| **基线** | `.ai/PROJECT.md`（项目内） | Goal / Users and Scenarios / MVP / Inputs and Outputs / Non-goals / Tech Direction / Constraints and Working Rules / Validation / Seed Tasks |
 
 铁律：交接信息只是线索，必须用 Git + 文件系统核验后才采信。
 
@@ -75,7 +75,14 @@ skills/
   project-audit/SKILL.md           低频复盘
 docs/
   design-principles.md             核心原则展开
-  examples.md                      范例（PROJECT.md / commit / audit 输出）
+  examples.md                      范例（.ai/PROJECT.md / commit / audit 输出）
+```
+
+基线文件不在本 pack 内，而是由 project-init 在你的项目里创建：
+
+```
+<你的项目>/
+  .ai/PROJECT.md                   项目基线（9 节），由 project-init 创建
 ```
 
 ---

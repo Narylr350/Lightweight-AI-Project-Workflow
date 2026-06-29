@@ -12,7 +12,7 @@ AI owns execution. User owns decisions.
 - AI 不能替用户决定项目目标、MVP、Non-goals、技术方向、长期基线、release、commit、tag、push、破坏性操作。
 - **AI recommendations are not decisions.** 推荐不等于拍板，用户确认后才算决策。
 - **AI assumptions are not baseline facts.** 未确认内容只能写成 Assumptions / Pending Questions，不能写成基线事实。
-- `PROJECT.md` 只能记录已确认决策、已确认约束和可核验项目事实。
+- `.ai/PROJECT.md` 只能记录已确认决策、已确认约束和可核验项目事实。
 - 减少确认疲劳：只在决策点确认，不在已确认范围内的普通执行步骤反复确认。
 
 ---
@@ -48,7 +48,7 @@ AI owns execution. User owns decisions.
 |---|---|---|---|---|
 | **事实** | Git（代码 / diff / 文件） | 做了什么改动 | 人 + AI | 每次改动 |
 | **交接** | commit message | Why / What / Verify / Next / Notes | project-finish 生成 | 每次提交 |
-| **基线** | `PROJECT.md`（项目根目录） | 目标 / 非目标 / MVP / 技术边界 / 验证方式 / seed tasks | project-init 创建，project-finish 必要时更新 | 基线变化时 |
+| **基线** | `.ai/PROJECT.md`（项目内） | 目标 / 非目标 / MVP / 技术边界 / 验证方式 / seed tasks | project-init 创建，project-finish 必要时更新 | 基线变化时 |
 
 **铁律**：上层依赖下层。交接信息必须用事实层核验；基线变化必须反映到事实层。
 
@@ -69,10 +69,10 @@ AI owns execution. User owns decisions.
 
 不保存流水账。
 
-- `PROJECT.md` 记项目基线，不记日常进度。
+- `.ai/PROJECT.md` 记项目基线，不记日常进度。
 - 日常进度由 commit message 承载。
-- 只有基线发生变化（方向调整 / 技术边界变化 / MVP 重定义）时才更新 PROJECT.md。
-- 不要在 PROJECT.md 里维护任务列表——seed tasks 只用于启动，后续 Next 写在 commit message。
+- 只有基线发生变化（方向调整 / 技术边界变化 / MVP 重定义）时才更新 .ai/PROJECT.md。
+- 不要在 .ai/PROJECT.md 里维护任务列表——seed tasks 只用于启动，后续 Next 写在 commit message。
 
 ---
 
@@ -94,9 +94,9 @@ project-audit 专门检查交接信息与 Git 事实是否一致。
 
 但不偷偷改基线。
 
-- 用户在当前 session 明确提出的需求，优先于 commit message 里的 Next 或 PROJECT.md 里的 seed tasks。
-- 但如果新需求与 PROJECT.md 基线冲突，必须停下问用户，或触发 project-audit。
-- **不要**在不更新 PROJECT.md 的情况下，按新方向改代码——这会让基线与实际脱节，后续 AI 接手时无法判断真实目标。
+- 用户在当前 session 明确提出的需求，优先于 commit message 里的 Next 或 .ai/PROJECT.md 里的 seed tasks。
+- 但如果新需求与 .ai/PROJECT.md 基线冲突，必须停下问用户，或触发 project-audit。
+- **不要**在不更新 .ai/PROJECT.md 的情况下，按新方向改代码——这会让基线与实际脱节，后续 AI 接手时无法判断真实目标。
 - 临时探索性改动可以例外，但 commit message 必须在 Notes 里标明"偏离基线，待确认"。
 
 ---
