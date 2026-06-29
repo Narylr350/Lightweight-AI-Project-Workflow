@@ -222,6 +222,19 @@ AI 推荐不等于决定。用户未确认前，技术方向不写入 .ai/PROJEC
 - 不要把 Assumptions 做成 .ai/PROJECT.md 的固定章节。
 - 如果确实有未解决问题，优先放在 project-init 回复或 commit message 的 Next / Notes 中。
 
+### Skill 接入检查
+
+init 阶段检查当前环境已安装的 skill，分两类判断：
+
+- **执行层 skill**（TDD / debugging / codebase-design 等，只管"怎么做"）→ 可接入 project-work，需用户确认。
+- **管理层 skill**（to-prd / to-issues / handoff / brainstorming 等，管"做什么"）→ 不接入，与本项目 pack 职责重叠。
+
+判断标准：这个 skill 会不会改变"本轮做什么"或"下一步做什么"？
+- 会 → 不接入。
+- 不会，只改变"怎么做" → 可以接入。
+
+用户确认的接入 skill 写入 .ai/PROJECT.md 的 Constraints and Working Rules。
+
 ### 不写代码，不建脚手架
 
 project-init 只产出文档。代码交给 project-work 写。不要在 init 阶段创建 `src/`、`package.json`、`main.py` 等。
