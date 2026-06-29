@@ -91,7 +91,49 @@ docs/
 
 将本 pack 的 `skills/` 目录下的 4 个 skill 文件夹放入你的 skill 发现路径（如 `~/.config/opencode/skills/` 或项目 `.opencode/skills/`）。
 
-AI 会根据 skill 的 `description` 自动判断何时触发对应 skill。
+## 怎么用
+
+用 `/skill 名` 强制触发对应 skill，不要等 AI 自己选。
+
+**新项目第一天：**
+
+```
+/project-init 我想做一个 XXX 工具
+```
+
+AI 问几个关键问题 → 生成基线确认包 → 你确认 → 写入 `.ai/PROJECT.md`。
+
+**日常开发：**
+
+```
+/project-work 做 XXX 功能
+```
+
+AI 读基线 → git 核验 → 判断任务类型 → 实现 → 自动进入 finish。
+
+**一轮做完，收尾提交：**
+
+```
+/project-finish
+```
+
+AI 检查改动 → 验证 → 生成 commit message → 你确认后提交。
+
+**感觉跑偏了：**
+
+```
+/project-audit
+```
+
+AI 只读分析 → 输出诊断报告 → 交你决定。
+
+**搭配执行层 skill：**
+
+init 阶段会列出环境里已装的执行层 skill（如 TDD / debugging），你确认要用的会写入 `.ai/PROJECT.md`。之后 work 会自动加载它们：
+
+```
+/project-work 用 TDD 做 XXX 功能
+```
 
 ---
 
