@@ -224,7 +224,12 @@ AI 推荐不等于决定。用户未确认前，技术方向不写入 .ai/PROJEC
 
 ### Skill 接入检查
 
-init 阶段检查当前环境已安装的执行层 skill（如 TDD / debugging / codebase-design），询问用户哪些要在 work 中使用。用户确认的写入 .ai/PROJECT.md 的 Constraints and Working Rules。
+init 阶段从当前环境的 available_skills 列表中找出执行层 skill（如 TDD / diagnosing-bugs / codebase-design / prototype），主动列出来，推荐用户选择是否在本项目的 work 中使用。
+
+- AI 已知当前环境装了哪些 skill，不需要扫描文件系统。
+- 只列执行层 skill（只管"怎么写代码"的）。不要列管理层 skill（管"做什么"的，如 to-prd / to-issues / handoff / brainstorming——这些和本 pack 职责重叠）。
+- 用户确认的接入 skill 写入 .ai/PROJECT.md 的 Constraints and Working Rules。
+- 用户也可以一个都不选，不影响项目推进。
 
 ### 不写代码，不建脚手架
 
