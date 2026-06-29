@@ -41,7 +41,7 @@ description: 低频复盘工具。用于多轮失败、用户说不对/先复盘
 ### 2. 检查 5 项
 
 1. **是否跑偏**：最近若干 commit 做的事是否符合 .ai/PROJECT.md 的目标和 MVP？是否触碰了非目标？
-2. **文档是否过期**：.ai/PROJECT.md 的技术边界 / MVP / 目标是否还和代码实际一致？
+2. **文档是否过期**：.ai/PROJECT.md 的 Tech Direction / Constraints and Working Rules / MVP / Goal 是否还和代码实际一致？
 3. **handoff 是否和 Git 冲突**：commit message 的 Next / Notes 与 `git log` / `git diff` 实际状态是否一致？交接信息是否过期或错误？
 4. **是否重复走已否方案**：是否有 commit 的 Notes 记录了已否方案，但后续又在重做？
 5. **是否过度工程化**：是否引入了 MVP 不需要的复杂度（第三方库 / 抽象层 / 配置项）？

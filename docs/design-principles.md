@@ -63,7 +63,7 @@ AI owns execution. User owns decisions.
 |---|---|---|---|---|
 | **事实** | Git（代码 / diff / 文件） | 做了什么改动 | 人 + AI | 每次改动 |
 | **交接** | commit message | Why / What / Verify / Next / Notes | project-finish 生成 | 每次提交 |
-| **基线** | `.ai/PROJECT.md`（项目内） | 目标 / 非目标 / MVP / 技术边界 / 验证方式 / seed tasks | project-init 创建，project-finish 必要时更新 | 基线变化时 |
+| **基线** | `.ai/PROJECT.md`（项目内） | Goal / Users and Scenarios / MVP / Inputs and Outputs / Non-goals / Tech Direction / Constraints and Working Rules / Validation / Seed Tasks | project-init 创建，project-finish 必要时更新 | 基线变化时 |
 
 **铁律**：上层依赖下层。交接信息必须用事实层核验；基线变化必须反映到事实层。
 
@@ -86,7 +86,7 @@ AI owns execution. User owns decisions.
 
 - `.ai/PROJECT.md` 记项目基线，不记日常进度。
 - 日常进度由 commit message 承载。
-- 只有基线发生变化（方向调整 / 技术边界变化 / MVP 重定义）时才更新 .ai/PROJECT.md。
+- 只有基线发生变化（方向调整 / Tech Direction 变化 / Constraints 变化 / MVP 重定义）时才更新 .ai/PROJECT.md。
 - 不要在 .ai/PROJECT.md 里维护任务列表——seed tasks 只用于启动，后续 Next 写在 commit message。
 
 ---
