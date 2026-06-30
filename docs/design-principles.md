@@ -25,6 +25,7 @@ AI owns execution. User owns decisions.
 - 不做全项目审计（除非触发 project-audit）。
 - 不要求全量测试。
 - 能用一行 commit message 说清的事，不写一段文档。
+- 给已有项目装这个 pack，用 pack 的轻量交接（git commit + .ai/PROJECT.md），不自动沿用项目原有的重工作流（任务文档、流水账、索引维护等）。除非用户明确要求保留原流程。
 
 判断标准：如果某个流程步骤对当前任务没有实际帮助，就跳过。
 
