@@ -55,6 +55,8 @@ Notes:  按下方规则决定是否写
 
 `<type>` 用约定式提交词：`feat / fix / docs / refactor / chore / test`。
 
+commit message 正文（Why/What/Verify/Next/Notes 的内容）用用户的语言。用户说中文就写中文，不要默认套英文。字段名和 `<type>` 保持英文。
+
 范例见 `docs/examples.md`。
 
 ### 3. Notes 字段规则
