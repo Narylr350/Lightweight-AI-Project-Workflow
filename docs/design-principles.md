@@ -150,9 +150,15 @@ project-audit 专门检查交接信息与 Git 事实是否一致。
 
 不是每轮都要走完 init → work → finish → audit。
 
-- 改一个 typo：直接改，直接提交，不触发任何 skill 流程。
+- 改一个 typo：直接改，提交时用简短 message，不触发完整 skill 流程。
 - 修一个小 bug：用 project-work 判断 → 改 → project-finish 提交。
 - 只有需要诊断时才用 project-audit。
 - 只有基线缺失或大改时才用 project-init。
 
 判断标准：如果任务能在 10 分钟内完成且不涉及基线变化，走最短路径。
+
+小任务走最短路径，不等于绕过 Decision Ownership：
+
+- 仍然不能自动 commit / tag / push / release，除非用户明确授权。
+- 涉及 `.ai/` 基线文件、长期工作规则、分支归属、skill 接入的改动，不算简单维护。
+- 如果简单改动会改变行为或影响交接 Notes，仍然进 project-finish。
