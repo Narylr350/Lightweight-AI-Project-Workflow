@@ -16,7 +16,7 @@ description: 低频复盘工具。用于多轮失败、用户说不对/先复盘
 - 多轮失败：连续几轮没解决问题。
 - 用户喊停："不对" / "先复盘" / "怎么又这样"。
 - release 前：发布前做一次整体检查。
-- 新 AI 接手发现材料冲突：.ai/PROJECT.md / commit message / 代码三者不一致。
+- 新 AI 接手发现材料冲突：`.ai/` 基线文件 / commit message / 代码三者不一致。
 
 ## 何时不用
 
@@ -30,9 +30,9 @@ description: 低频复盘工具。用于多轮失败、用户说不对/先复盘
 
 - audit 结论是诊断，不是裁决。
 - **不直接改代码**。
-- **不改 .ai/PROJECT.md**。
+- **不改 `.ai/` 基线文件**。
 - 输出诊断报告 + 建议，交用户决定。
-- 发现基线过期 → 建议更新 .ai/PROJECT.md，而非直接改。
+- 发现基线过期 → 建议更新对应的 `.ai/` 基线文件，而非直接改。
 - 发现 bug → 在报告里指出，交 project-work 修复。
 - 要把 audit 结论固化成长期规则，必须用户确认或有可核验证据。AI 的诊断不能自动变成基线。
 - 审计后不要自动修 skill。先区分通用设计缺口、规则冲突、单次输出偏差、外部工具问题；只有前两类才建议修改规则。
@@ -40,8 +40,8 @@ description: 低频复盘工具。用于多轮失败、用户说不对/先复盘
 
 ### 2. 检查 5 项
 
-1. **是否跑偏**：最近若干 commit 做的事是否符合 .ai/PROJECT.md 的目标和 MVP？是否触碰了非目标？
-2. **文档是否过期**：.ai/PROJECT.md 的 Tech Direction / Constraints and Working Rules / MVP / Goal 是否还和代码实际一致？
+1. **是否跑偏**：最近若干 commit 做的事是否符合 `.ai/PROJECT.md` 的目标、MVP、Non-goals？是否触碰了非目标？
+2. **文档是否过期**：`.ai/PROJECT.md` / `.ai/TECH.md` / `.ai/CONSTRAINTS.md` / `.ai/VALIDATION.md` 是否还和代码实际一致？
 3. **handoff 是否和 Git 冲突**：commit message 的 Next / Notes 与 `git log` / `git diff` 实际状态是否一致？交接信息是否过期或错误？
 4. **是否重复走已否方案**：是否有 commit 的 Notes 记录了已否方案，但后续又在重做？
 5. **是否过度工程化**：是否引入了 MVP 不需要的复杂度（第三方库 / 抽象层 / 配置项）？
@@ -51,7 +51,7 @@ description: 低频复盘工具。用于多轮失败、用户说不对/先复盘
 诊断报告包含：
 
 - **触发原因**：为什么做这次审计。
-- **现状（Git 核验）**：最近 commit / .ai/PROJECT.md 基线 / 代码实际状态。
+- **现状（Git 核验）**：最近 commit / `.ai/` 基线 / 代码实际状态。
 - **问题**：逐条列出发现的问题，对应 5 项检查。
 - **根因**：为什么会跑偏。
 - **建议**：具体的下一步行动（通常指向 project-work 的某个任务，或建议回 project-init 重建基线）。

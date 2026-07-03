@@ -8,11 +8,11 @@
 
 **痛点三：AI 做完就走了。** 改了什么、为什么改、怎么验证、下一步做什么——这些交接信息不留下，下个 AI 只能靠猜。
 
-这个 pack 不试图复现完整软件工程流程。它只用 Git、一份轻量基线文件和几行结构化 commit message，让 AI 能在个人项目里低成本立项、稳定推进、干净收尾。
+这个 pack 不试图复现完整软件工程流程。它只用 Git、一组轻量 `.ai/` 基线文件和几行结构化 commit message，让 AI 能在个人项目里低成本立项、稳定推进、干净收尾。
 
 **核心设计：**
 
-- **三层事实模型**：Git（事实）→ commit message（交接）→ .ai/PROJECT.md（基线）。信息存在文件里，不靠对话记忆。
+- **三层事实模型**：Git（事实）→ commit message（交接）→ `.ai/` 基线文件（基线）。信息存在文件里，不靠对话记忆。
 - **Decision Ownership**：AI 推进与执行，用户做关键判断与拍板。AI 不能替用户决定目标、MVP、技术方向、基线。
 - **轻量优先**：简单任务走快速模式，验证按风险分级，不让流程开销超过改造成本。
 - **入口极少**：只 4 个 skill——init / work / finish / audit，内部阶段不暴露为命令。
@@ -41,7 +41,7 @@
 
 | Skill | 一句话 | 何时触发 |
 |---|---|---|
-| **project-init** | 新项目初始化或建立基线 | 新项目第一天 / 无 .ai/PROJECT.md / 方向大改 |
+| **project-init** | 新项目初始化或建立基线 | 新项目第一天 / 无 `.ai/PROJECT.md` 或基线不完整 / 方向大改 |
 | **project-work** | 日常主入口，判断任务类型后最小范围推进 | 每次开工 |
 | **project-finish** | 收尾检查 + 生成结构化 commit message | 一轮工作结束准备提交前 |
 | **project-audit** | 低频复盘诊断，默认只读不改 | 多轮失败 / 用户喊停 / release 前 / 接手冲突 |
@@ -62,7 +62,7 @@ init（一次）→ work ⇄ finish（常态循环）→ audit（异常时介入
 |---|---|---|
 | **事实** | Git（代码 / diff / 文件） | 做了什么改动 |
 | **交接** | commit message | Why / What / Verify / Next / Notes |
-| **基线** | `.ai/PROJECT.md`（项目内） | Goal / Users and Scenarios / MVP / Inputs and Outputs / Non-goals / Tech Direction / Constraints and Working Rules / Validation / Seed Tasks |
+| **基线** | `.ai/` 基线文件（项目内） | PROJECT 摘要 / TECH 技术方向 / CONSTRAINTS 工作规则 / VALIDATION 验证规则 |
 
 铁律：交接信息只是线索，必须用 Git + 文件系统核验后才采信。
 
@@ -81,14 +81,17 @@ skills/
   project-audit/SKILL.md           低频复盘
 docs/
   design-principles.md             核心原则展开
-  examples.md                      范例（.ai/PROJECT.md / commit / audit 输出）
+  examples.md                      范例（`.ai/` 基线文件 / commit / audit 输出）
 ```
 
 基线文件不在本 pack 内，而是由 project-init 在你的项目里创建：
 
 ```
 <你的项目>/
-  .ai/PROJECT.md                   项目基线（9 节），由 project-init 创建
+  .ai/PROJECT.md                   决策摘要：Goal / Users / MVP / I/O / Non-goals / Seed Tasks
+  .ai/TECH.md                      技术方向
+  .ai/CONSTRAINTS.md               工作规则、硬约束、接入的 skill
+  .ai/VALIDATION.md                验证命令和规则
 ```
 
 ---
@@ -107,7 +110,7 @@ docs/
 /project-init 我想做一个 XXX 工具
 ```
 
-AI 问几个关键问题 → 生成基线确认包 → 你确认 → 写入 `.ai/PROJECT.md`。
+AI 问几个关键问题 → 生成基线确认包 → 你确认 → 写入 `.ai/` 基线文件。
 
 **日常开发：**
 
@@ -115,7 +118,7 @@ AI 问几个关键问题 → 生成基线确认包 → 你确认 → 写入 `.ai
 /project-work 做 XXX 功能
 ```
 
-AI 读基线 → git 核验 → 判断任务类型 → 实现 → 自动进入 finish。
+AI 读 `.ai/PROJECT.md` 摘要和 `.ai/CONSTRAINTS.md` 规则 → git 核验 → 判断任务类型 → 实现 → 自动进入 finish。
 
 **一轮做完，收尾提交：**
 
@@ -133,9 +136,9 @@ AI 检查改动 → 验证 → 生成 commit message → 你确认后提交。
 
 AI 只读分析 → 输出诊断报告 → 交你决定。
 
-**搭配执行层 skill：**
+**搭配执行层 / finish 层 skill：**
 
-init 阶段会列出环境里已装的执行层 skill（如 TDD / debugging），你确认要用的会写入 `.ai/PROJECT.md`。之后 work 会自动加载它们：
+init 阶段会列出环境里已装的执行层 skill（如 TDD / debugging）和 finish 层 skill（如 code review）。你确认要用的会写入 `.ai/CONSTRAINTS.md`。之后 work/finish 会按层自动加载它们：
 
 ```
 /project-work 用 TDD 做 XXX 功能
