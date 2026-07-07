@@ -336,7 +336,7 @@ init 阶段从当前环境的 available_skills 列表中找出可接入 skill，
 - CLI help / 命令示例
 - 安装脚本 / 构建配置
 
-在 `.ai/CONSTRAINTS.md` 里写一节"Maintenance Surface"，列出项目实际有的维护表面文件。没有的不写。project-finish 只在 diff 触发条件出现时检查这些文件是否需要同步。
+在 `.ai/CONSTRAINTS.md` 里写一节"Maintenance Surface"，列出项目实际有的维护表面文件。没有的不写。被 Workflow Authority Gate 降级为历史参考的文件不属于 Maintenance Surface，不记录。project-finish 只在 diff 触发条件出现时检查这些文件是否需要同步。
 
 ### 不写代码，不建脚手架
 
