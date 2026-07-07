@@ -322,6 +322,22 @@ init 阶段从当前环境的 available_skills 列表中找出可接入 skill，
 
 按 design-principles 的"AI 自己处理可逆操作"原则执行：启动服务、设环境变量这类低风险操作 AI 直接做，不打断用户。只有需管理员权限、装全局软件、需凭据时才提示用户。
 
+### Maintenance Surface 识别
+
+生成 `.ai/CONSTRAINTS.md` 时，识别项目已有的维护表面文件，记录下来供 project-finish 触发式检查。不强制复杂模板，不创造不存在的维护表面。
+
+识别范围（只记录项目实际存在的）：
+
+- README / 使用说明
+- CHANGELOG
+- 版本文件（package.json / pyproject.toml / VERSION 等）
+- `.env.example` / config.example
+- 公开 API 文档
+- CLI help / 命令示例
+- 安装脚本 / 构建配置
+
+在 `.ai/CONSTRAINTS.md` 里写一节"Maintenance Surface"，列出项目实际有的维护表面文件。没有的不写。project-finish 只在 diff 触发条件出现时检查这些文件是否需要同步。
+
 ### 不写代码，不建脚手架
 
 project-init 只产出文档。代码交给 project-work 写。不要在 init 阶段创建 `src/`、`package.json`、`main.py` 等。

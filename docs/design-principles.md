@@ -162,3 +162,68 @@ project-audit 专门检查交接信息与 Git 事实是否一致。
 - 仍然不能自动 commit / tag / push / release，除非用户明确授权。
 - 涉及 `.ai/` 基线文件、长期工作规则、分支归属、skill 接入的改动，不算简单维护。
 - 如果简单改动会改变行为或影响交接 Notes，仍然进 project-finish。
+
+---
+
+## 12. Instruction Hygiene（纠偏污染防护）
+
+用户纠偏时，AI 先分类再决定落盘位置：
+
+| 纠偏类型 | 落盘位置 |
+|---|---|
+| 本轮交接信息 | commit Notes |
+| 长期工作规则 | 转译成正向规则，确认后写 `.ai/CONSTRAINTS.md` 或 skill |
+| 产品需求 | 转译成面向用户/开发者的产品规则 |
+| 情绪反馈 / 一次性纠偏 | 不落盘 |
+
+**禁止把以下内容写进代码、README、用户文档、产品文案、SKILL 正文：**
+
+- 用户纠偏原话
+- AI 失败过程
+- AI 自我警告
+
+commit Notes 可以记录纠偏（交接层），但产物层不能被污染。产物文档越来越像"AI 被训话记录"是反模式。
+
+---
+
+## 13. Maintenance Surface（工程一致性表面）
+
+代码改了，但 README、配置示例、版本号、CHANGELOG、安装说明没同步——这是常见 AI 工程素养缺口。
+
+**识别时机：** init / re-init 时识别项目已有的维护表面，不强制复杂模板。维护表面包括：
+
+- README / 使用说明
+- CHANGELOG
+- 版本文件（package.json / pyproject.toml / VERSION 等）
+- `.env.example` / config.example
+- 公开 API 文档
+- CLI help / 命令示例
+- 安装脚本 / 构建配置
+
+**检查时机：** 只在 project-finish 触发条件出现时检查，不每轮检查。触发条件：
+
+- 本轮改了用户可见行为
+- CLI 参数 / 命令示例
+- 配置项
+- 依赖
+- 安装方式
+- 公开 API
+- 包元信息
+- release 相关内容
+
+**版本号单独处理：** 只有 release / tag / publish / 用户明确要求发布时才处理版本号。不每轮 bump。
+
+---
+
+## 14. Frequency-based Weight（按频率决定流程重量）
+
+不要用"轻量"一刀切压所有入口。按使用频率决定流程重量：
+
+| 入口 | 频率 | 重量 | 重点 |
+|---|---|---|---|
+| project-init / re-init | 低频 | 可以更重 | 把基线和 Seed Tasks 立住 |
+| project-work | 高频 | 必须轻 | 最小范围推进 |
+| project-finish | 高频 | 必须轻 | 只做触发式检查 |
+| project-audit | 低频 | 可以稍重 | 只读诊断，不默认修 |
+
+真正应该防的是 work / finish 变重。init 重一点没有问题，因为它是低频基线建立入口。
