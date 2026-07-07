@@ -324,7 +324,7 @@ init 阶段从当前环境的 available_skills 列表中找出可接入 skill，
 
 ### Maintenance Surface 识别
 
-生成 `.ai/CONSTRAINTS.md` 时，识别项目已有的维护表面文件，记录下来供 project-finish 触发式检查。不强制复杂模板，不创造不存在的维护表面。
+生成 `.ai/CONSTRAINTS.md` 时，识别项目**已有**的维护表面文件，记录下来供 project-finish 触发式检查。不强制复杂模板，**不创造不存在的维护表面**。
 
 识别范围（只记录项目实际存在的）：
 
