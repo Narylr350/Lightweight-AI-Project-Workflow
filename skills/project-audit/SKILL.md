@@ -42,7 +42,7 @@ description: 低频复盘工具。用于多轮失败、用户说不对/先复盘
 
 1. **是否跑偏**：最近若干 commit 做的事是否符合 `.ai/PROJECT.md` 的目标、MVP、Non-goals？是否触碰了非目标？
 2. **文档是否过期**：`.ai/PROJECT.md` / `.ai/TECH.md` / `.ai/CONSTRAINTS.md` / `.ai/VALIDATION.md` 是否还和代码实际一致？
-3. **handoff 是否和 Git 冲突**：commit message 的 Next / Notes 与 `git log` / `git diff` 实际状态是否一致？交接信息是否过期或错误？
+3. **handoff 是否和 Git / 验证证据冲突**：commit message 的 Why / What / Verify / Next / Notes 是否与 `git log` / `git diff` 和实际验证结果一致？Verify 的结论是否超过证据覆盖范围，例如用构建或单元测试声称视觉、交互、性能、平台集成或真实外部 I/O 已整体完成？
 4. **是否重复走已否方案**：是否有 commit 的 Notes 记录了已否方案，但后续又在重做？
 5. **是否过度工程化**：是否引入了 MVP 不需要的复杂度（第三方库 / 抽象层 / 配置项）？
 6. **流程规则是否跨入口覆盖**：如果失败和 workflow / skill 规则有关，检查是否只在某个入口写了规则，但其他入口仍能改同一类事实或绕过同一决策点。不要只修当前触发的 skill，要找出所有能触发同类动作的入口。
