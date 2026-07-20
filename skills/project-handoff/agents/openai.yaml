@@ -1,0 +1,6 @@
+interface:
+  display_name: "Project Handoff"
+  short_description: "手动生成未完成工作的本地临时交接，供下一位 AI 核验接手"
+  default_prompt: "使用 $project-handoff 为当前未完成工作生成简洁、可核验的临时交接。"
+policy:
+  allow_implicit_invocation: false
