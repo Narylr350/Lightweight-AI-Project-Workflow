@@ -57,6 +57,9 @@ init（一次）-> work ⇄ finish（常态循环）
 
 ```
 README.md                          本文件
+package.json                       Pi Package 声明，复用现有 skills
+extensions/
+  workflow.ts                      Pi 原生入口与工具配置
 skills/
   project-init/SKILL.md            初始化 / 建立基线
   project-work/SKILL.md            日常主入口
@@ -84,11 +87,37 @@ project-handoff 还会按需创建 `.ai/HANDOFF.local.md`。它是本地临时�
 
 ## 安装
 
-将本 pack 的 `skills/` 目录下的 5 个 skill 文件夹放入你的 skill 发现路径（如 `~/.config/opencode/skills/` 或项目 `.opencode/skills/`）。
+### Pi
+
+先安装 Pi：
+
+```powershell
+npm install -g @earendil-works/pi-coding-agent
+```
+
+在本仓库根目录注册这个本地 package：
+
+```powershell
+pi install .
+```
+
+Pi 会直接加载现有 `skills/`，不复制第二套文件。package 还提供 `/project-init`、`/project-work`、`/project-finish`、`/project-handoff` 和 `/project-audit` 原生入口：入口会按任务收窄 Pi 内置工具；第三方工具默认不常驻，由 `search_tools` 在任务需要时检索并启用。这里的工具切换用于减少常驻上下文，不是权限隔离，`bash` 仍可能修改文件。
+
+Pi 的 skill 列表在启动时生成，不能由 extension 在会话中动态过滤。平时可用 `pi config` 启用或停用 package 资源；需要只加载本 pack 时，在仓库根目录启动：
+
+```powershell
+pi --no-skills --skill .\skills
+```
+
+`--no-skills` 关闭默认 skill 发现，显式 `--skill` 路径仍会加载。这沿用 Pi 自己的资源边界，不在本项目里再维护一套 skill 注册系统。
+
+### 其他运行时
+
+将本 pack 的 `skills/` 目录下的 5 个 skill 文件夹放入对应的 skill 发现路径（如 `~/.config/opencode/skills/` 或项目 `.opencode/skills/`）。
 
 ## 怎么用
 
-用平台提供的显式 skill 调用方式触发（例如 OpenCode 的 `/project-work` 或 Codex 的 `$project-work`），不要等 AI 自己选。
+用平台提供的显式 skill 调用方式触发，例如 Pi 和 OpenCode 的 `/project-work` 或 Codex 的 `$project-work`，不要等 AI 自己选。
 
 **新项目第一天：**
 
