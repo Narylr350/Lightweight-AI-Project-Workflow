@@ -114,7 +114,7 @@ AI 读 `.ai/PROJECT.md` 摘要和 `.ai/CONSTRAINTS.md` 规则 -> git 核验 -> �
 /project-goal 为当前模块生成目标模式提示词
 ```
 
-Codex 使用 `$project-goal`。AI 核验需求、架构和实际状态，明确实施路径、切片、验收及停止条件，输出可复制提示词；有关键未决问题时先澄清。它只由用户手动调用，不启动目标、不改项目，也不授权实施。普通开发无需调用它，复杂模块的实施设计仍由 project-work 负责。
+Codex 使用 `$project-goal`。AI 先核验需求、架构与实施方案，再输出精简的目标提示词：交付结果、验收依据、必要边界和停止条件。已有规则和方案只引用，不重复搬进提示词；关键未决问题先澄清。它只由用户手动调用，不启动目标、不改项目，也不授权实施。普通开发无需调用它，复杂模块的实施设计仍由 project-work 负责。
 
 **一轮做完，收尾提交：**
 
@@ -130,7 +130,9 @@ AI 检查改动 -> 验证 -> 生成 commit message -> 你确认后提交。
 /project-handoff
 ```
 
-AI 核验当前 Git / 文件状态 -> 生成 `.ai/HANDOFF.local.md` 和可复制交接文本 -> 下一位 AI 用 project-work 接手。
+AI 核验当前 Git / 文件状态 -> 通过脚本生成 `.ai/HANDOFF.local.md` 和可复制交接文本 -> 下一位 AI 用 project-work 通过脚本读取并删除。文件消费后即清理，不等任务提交；未完成工作仍按实际状态继续。
+
+交接脚本需要 Node.js 和 Git。生成和消费使用同一份 `skills/project-handoff/scripts/handoff.mjs`，不需要 npm 安装依赖；非 Git 项目不写 Git 忽略规则。
 
 project-handoff 只能由用户明确调用。它不会因为额度、上下文长度、错误次数或工作区有未提交改动而自动触发；Codex 安装会通过 skill policy 禁止隐式调用。
 

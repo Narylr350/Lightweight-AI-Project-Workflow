@@ -34,7 +34,7 @@ description: 仅当用户明确调用 project-handoff 或明确要求生成交�
 
 ## 关键边界
 
-- 默认只读项目状态；除临时 handoff 文件和本地 Git exclude 外，不修改项目文件。
+- 默认只读项目状态；除临时草稿、handoff 文件和本地 Git exclude 外，不修改项目文件。
 - 不 `commit`、`tag`、`push`、`stash`、`reset`、`clean`、切分支或合并。
 - 不为了让状态更整齐而补代码、格式化、安装依赖、构建或跑测试；只记录已经存在的结果。
 - handoff 是线索，不是事实源，不确认新决策，也不把 AI 推断写成用户决定。
@@ -71,21 +71,19 @@ description: 仅当用户明确调用 project-handoff 或明确要求生成交�
 
 项目长期目标、技术方向和规则已经在 `.ai/` 或项目指令中存在时，只引用，不重复抄写。
 
-### 3. 写入本地临时文件
+### 3. 通过脚本生产本地交接
 
-默认路径：
+先用文件工具将上面的增量写成目标项目内的 UTF-8 临时草稿 `temp/HANDOFF.draft.md`，再调用 [handoff.mjs](scripts/handoff.mjs)：
 
 ```text
-.ai/HANDOFF.local.md
+node "<本 skill 实际安装目录>/scripts/handoff.mjs" produce --project "<目标项目根>" --input "<目标项目根>/temp/HANDOFF.draft.md"
 ```
 
-规则：
-
-- 该文件不是基线文件，不进入三层事实模型。
-- Git 仓库中，如果该文件尚未被忽略，用 `git rev-parse --git-path info/exclude` 定位本地 exclude 文件，把 handoff 的**精确相对路径**加入其中；不要假定 `.git` 一定是目录，也不要修改 tracked `.gitignore`。
-- 写入后用 `git check-ignore` 或等价方式确认它不会被提交。
-- 如果该路径已经被 Git 跟踪，不覆盖 tracked 文件；改为只在回复中输出 handoff，并说明路径冲突。
-- 新 handoff 可以覆盖旧的本地 handoff；用户本次手动触发代表要以当前状态为准。
+- 使用实际绝对路径，`--project` 明确指向目标项目；Git 项目使用 Git 根。脚本只依赖 Node.js 和 Git，不安装额外包。运行环境缺失时说明阻塞，不绕过脚本直接管理 handoff。
+- 成功后生成 `.ai/HANDOFF.local.md` 并删除输入草稿；现有未跟踪 handoff 用当前内容原子替换。该文件不是基线，不进入三层事实模型。
+- 脚本自动核验 Git 跟踪状态和忽略规则，必要时只写本地 `info/exclude`，不修改 tracked `.gitignore`，支持 Git worktree 的真实 exclude 路径。
+- 同名文件已被 Git 跟踪时，脚本拒绝覆盖；只在回复中交付内容，并说明冲突。其他失败按实际错误处理，不能声明生成成功。
+- 成功结果含路径和内容指纹，不需要额外的手动删除步骤。
 
 ### 4. 同时输出可复制版本
 
@@ -93,7 +91,7 @@ description: 仅当用户明确调用 project-handoff 或明确要求生成交�
 
 - 本地 handoff 文件路径（若成功写入）
 - 一份 Markdown 代码块中的相同内容
-- 一句接手方式：让下一位 AI 使用 project-work，并先核验 Git 后读取该 handoff
+- 一句接手方式：让下一位 AI 使用 project-work，先核验 Git，再通过同一脚本的 consume 命令读取并删除该 handoff
 
 不要在交接后继续推进原任务。
 

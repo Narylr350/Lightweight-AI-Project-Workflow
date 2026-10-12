@@ -36,7 +36,7 @@ description: 一轮工作结束时使用。检查 git status/diff/验证结果/�
 
 1. **git status**：确认改了哪些文件，分别核对 staged / unstaged / untracked，是否有未预期的改动。
 2. **git diff**：确认改动内容符合本轮意图。
-3. **临时文件**：删除或归位临时文件（测试输出、调试文件等）。临时输出、runtime、cache、logs、下载物、本地凭据等不应提交；必要时补 `.gitignore`。AI 工具自己的运行时目录（如 `.omo/`、`.codex/`、`.claude/`、`.cursor/` 等）也不应提交。`.ai/HANDOFF.local.md` 是 project-handoff 生成的本地临时接力材料，不能 stage 或提交；当前工作尚未完成时不要把它当垃圾提前删除。
+3. **临时文件**：删除或归位临时文件（测试输出、调试文件等）。临时输出、runtime、cache、logs、下载物、本地凭据等不应提交；必要时补 `.gitignore`。AI 工具自己的运行时目录（如 `.omo/`、`.codex/`、`.claude/`、`.cursor/` 等）也不应提交。`.ai/HANDOFF.local.md` 是 project-handoff 生成的本地临时接力材料，不能 stage 或提交；消费由 project-work 通过 handoff 脚本执行；未消费的交接不作为普通临时输出清理。
 4. **验证结果**：确认本轮改动是否达到预期效果。手动验证或跑测试，记录验证方式。跨多轮模块开发时，对照模块交付方案说明本切片满足的验收项、剩余缺口和未执行的实际验收；不以测试数量或局部通过代替模块完成。
 5. **Finish 层 skill**：检查 `.ai/CONSTRAINTS.md` 是否声明了 finish 层 skill。如有，在生成 commit message 前对当前 diff 调用。发现问题回 project-work 修复，不带着已知问题提交。没有声明或 `.ai/CONSTRAINTS.md` 不存在则跳过。
    - 如果声明的 finish 层 skill 当前环境不可用，不要静默跳过，也不要换成别的 skill。把它当作基线 / 环境不一致：提示用户选择临时跳过、修复环境，或更新 `.ai/CONSTRAINTS.md`。
@@ -157,7 +157,6 @@ commit message 正文（Why/What/Verify/Next/Notes 的内容）用用户的语�
 
 用户确认提交后：
 
-- 如果存在 `.ai/HANDOFF.local.md`，且其中交接的工作已在本次提交中完成，删除该本地 handoff；如果无法确认是否已消费，保留并明确提醒，不擅自删除。
 - 当前工作轮结束。即使处于目标模式、持续执行或已授权自动推进，执行下一项前也必须重新按 **project-work** 核验任务类型和分支关系。
 - 有明确 Next → 建议用户在新对话用 **project-work** 继续。
 - 多轮失败或偏航 → 建议触发 **project-audit**。
