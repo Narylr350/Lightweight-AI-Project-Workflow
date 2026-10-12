@@ -37,7 +37,7 @@ description: 一轮工作结束时使用。检查 git status/diff/验证结果/�
 1. **git status**：确认改了哪些文件，分别核对 staged / unstaged / untracked，是否有未预期的改动。
 2. **git diff**：确认改动内容符合本轮意图。
 3. **临时文件**：删除或归位临时文件（测试输出、调试文件等）。临时输出、runtime、cache、logs、下载物、本地凭据等不应提交；必要时补 `.gitignore`。AI 工具自己的运行时目录（如 `.omo/`、`.codex/`、`.claude/`、`.cursor/` 等）也不应提交。`.ai/HANDOFF.local.md` 是 project-handoff 生成的本地临时接力材料，不能 stage 或提交；当前工作尚未完成时不要把它当垃圾提前删除。
-4. **验证结果**：确认本轮改动是否达到预期效果。手动验证或跑测试，记录验证方式。
+4. **验证结果**：确认本轮改动是否达到预期效果。手动验证或跑测试，记录验证方式。跨多轮模块开发时，对照模块交付方案说明本切片满足的验收项、剩余缺口和未执行的实际验收；不以测试数量或局部通过代替模块完成。
 5. **Finish 层 skill**：检查 `.ai/CONSTRAINTS.md` 是否声明了 finish 层 skill。如有，在生成 commit message 前对当前 diff 调用。发现问题回 project-work 修复，不带着已知问题提交。没有声明或 `.ai/CONSTRAINTS.md` 不存在则跳过。
    - 如果声明的 finish 层 skill 当前环境不可用，不要静默跳过，也不要换成别的 skill。把它当作基线 / 环境不一致：提示用户选择临时跳过、修复环境，或更新 `.ai/CONSTRAINTS.md`。
    - Finish 层发现必须先分类：当前 diff 引入或暴露的阻塞问题（bug、死代码、行为不一致、验证缺口、安全/数据/权限/外部 I/O 风险）→ 回 project-work 修复，不生成提交 message；非本轮引入的既有问题或用户明确接受的非阻塞债务 → 可写 Next，Notes 按规则决定是否必写；误报 → 简短说明不采纳原因，必要时写 Notes 防止下一轮误解。
@@ -84,7 +84,7 @@ description: 一轮工作结束时使用。检查 git status/diff/验证结果/�
 Why:    为什么做这个改动（动机 / 触发）
 What:   具体改了什么（关键改动点，2-5 条）
 Verify: 怎么验证的（命令 / 手动检查 / 测试结果）
-Next:   下一步该做什么（线索，不是承诺）
+Next:   下一步该做什么（线索，不是承诺；模块开发对应剩余验收缺口，已完成则明确无后续）
 Notes:  按下方规则决定是否写
 ```
 

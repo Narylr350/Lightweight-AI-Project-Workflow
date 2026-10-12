@@ -1,0 +1,6 @@
+interface:
+  display_name: "Project Goal"
+  short_description: "手动为模块或项目阶段生成可验收、可收敛的目标模式提示词"
+  default_prompt: "使用 $project-goal 为我指定的任务生成目标模式提示词，先核验实施路径与完成条件，不启动目标或实施。"
+policy:
+  allow_implicit_invocation: false

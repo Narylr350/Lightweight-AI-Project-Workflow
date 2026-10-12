@@ -6,7 +6,7 @@ AI 在缺少项目上下文时会退回通用做法。通用做法本身没问�
 
 这个 pack 把这些选择保存成项目推进需要的工程上下文，尽量继承项目里已有的作者决定和具体锚点，让无记忆或弱记忆的 AI 在换线程、换模型后仍能对齐项目。未特别定义的部分继续用合适的默认做法。
 
-5 个 skill，Git 事实源，结构化 commit message，最小基线文件。
+6 个 skill，Git 事实源，结构化 commit message，最小基线文件。
 
 ---
 
@@ -19,7 +19,7 @@ AI 在缺少项目上下文时会退回通用做法。通用做法本身没问�
 
 ---
 
-## 5 个 Skill
+## 6 个 Skill
 
 | Skill | 一句话 | 何时触发 |
 |---|---|---|
@@ -28,6 +28,7 @@ AI 在缺少项目上下文时会退回通用做法。通用做法本身没问�
 | **project-finish** | 收尾检查 + 生成结构化 commit message | 一轮工作结束准备提交前 |
 | **project-handoff** | 为未完成工作生成 Git 外临时接力 | 额度 / 上下文 / 工具中断时由用户手动触发 |
 | **project-audit** | 低频复盘诊断，默认只读不改 | 多轮失败 / 用户喊停 / release 前 / 接手冲突 |
+| **project-goal** | 为模块或项目阶段生成目标模式提示词 | 用户手动调用，需要自主推进目标时 |
 
 典型流程：
 
@@ -57,15 +58,13 @@ init（一次）-> work ⇄ finish（常态循环）
 
 ```
 README.md                          本文件
-package.json                       Pi Package 声明，复用现有 skills
-extensions/
-  workflow.ts                      Pi 原生入口与工具配置
 skills/
   project-init/SKILL.md            初始化 / 建立基线
   project-work/SKILL.md            日常主入口
   project-finish/SKILL.md          收尾 + 生成 commit
   project-handoff/SKILL.md         手动生成未完成工作的临时接力
   project-audit/SKILL.md           低频复盘
+  project-goal/SKILL.md            手动生成目标模式提示词
 docs/
   design-principles.md             核心原则展开
   examples.md                      范例（`.ai/` 基线文件 / commit / audit 输出）
@@ -87,37 +86,11 @@ project-handoff 还会按需创建 `.ai/HANDOFF.local.md`。它是本地临时�
 
 ## 安装
 
-### Pi
-
-先安装 Pi：
-
-```powershell
-npm install -g @earendil-works/pi-coding-agent
-```
-
-在本仓库根目录注册这个本地 package：
-
-```powershell
-pi install .
-```
-
-Pi 会直接加载现有 `skills/`，不复制第二套文件。package 还提供 `/project-init`、`/project-work`、`/project-finish`、`/project-handoff` 和 `/project-audit` 原生入口：入口会按任务收窄 Pi 内置工具；第三方工具默认不常驻，由 `search_tools` 在任务需要时检索并启用。这里的工具切换用于减少常驻上下文，不是权限隔离，`bash` 仍可能修改文件。
-
-Pi 的 skill 列表在启动时生成，不能由 extension 在会话中动态过滤。平时可用 `pi config` 启用或停用 package 资源；需要只加载本 pack 时，在仓库根目录启动：
-
-```powershell
-pi --no-skills --skill .\skills
-```
-
-`--no-skills` 关闭默认 skill 发现，显式 `--skill` 路径仍会加载。这沿用 Pi 自己的资源边界，不在本项目里再维护一套 skill 注册系统。
-
-### 其他运行时
-
-将本 pack 的 `skills/` 目录下的 5 个 skill 文件夹放入对应的 skill 发现路径（如 `~/.config/opencode/skills/` 或项目 `.opencode/skills/`）。
+将本 pack 的 `skills/` 目录下的 6 个 skill 文件夹放入对应的 skill 发现路径，例如 OpenCode 的 `~/.config/opencode/skills/` 或项目 `.opencode/skills/`，Codex 的 `~/.codex/skills/`。
 
 ## 怎么用
 
-用平台提供的显式 skill 调用方式触发，例如 Pi 和 OpenCode 的 `/project-work` 或 Codex 的 `$project-work`，不要等 AI 自己选。
+用平台提供的显式 skill 调用方式触发，例如 OpenCode 的 `/project-work` 或 Codex 的 `$project-work`，不要等 AI 自己选。
 
 **新项目第一天：**
 
@@ -134,6 +107,14 @@ AI 问几个关键问题 -> 生成基线确认包 -> 你确认 -> 写入 `.ai/` 
 ```
 
 AI 读 `.ai/PROJECT.md` 摘要和 `.ai/CONSTRAINTS.md` 规则 -> git 核验 -> 判断任务类型 -> 实现 -> 自动进入 finish。
+
+**准备自主推进的目标：**
+
+```text
+/project-goal 为当前模块生成目标模式提示词
+```
+
+Codex 使用 `$project-goal`。AI 核验需求、架构和实际状态，明确实施路径、切片、验收及停止条件，输出可复制提示词；有关键未决问题时先澄清。它只由用户手动调用，不启动目标、不改项目，也不授权实施。普通开发无需调用它，复杂模块的实施设计仍由 project-work 负责。
 
 **一轮做完，收尾提交：**
 
