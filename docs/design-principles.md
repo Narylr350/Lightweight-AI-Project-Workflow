@@ -29,7 +29,7 @@ AI owns execution. User owns decisions.
 
 ### AI 自己处理可逆操作，简化用户操作量
 
-Decision Ownership 是"方向归用户"，不是"所有动作都问用户"。AI 能自己做的可逆、低风险操作，直接做，不要抛给用户判断。
+Decision Ownership 是"方向归用户"，不是"所有动作都问用户"。已有权限范围内的可逆、低风险操作直接做，不要抛给用户判断；可逆性本身不扩大操作权限。
 
 环境/执行类问题按这个顺序处理：
 
@@ -132,7 +132,7 @@ AI 仍不能擅自做的（回到 Decision Ownership）：破坏性操作、改�
 - `.ai/PROJECT.md` 记项目决策摘要，`.ai/TECH.md` / `.ai/CONSTRAINTS.md` / `.ai/VALIDATION.md` 记分层基线，不记日常进度。
 - `.ai/HANDOFF.local.md` 是用户手动触发的临时接力，不是基线文档，不进入 Git。
 - 已提交工作的日常进度由 commit message 承载；未完成工作的 handoff 只在不可正常收尾时临时使用。
-- 只有基线发生变化（方向调整 / Tech Direction 变化 / Constraints 变化 / MVP 重定义 / Validation 规则变化）时才更新对应的 `.ai/` 文件。
+- 基线中的方向、范围、长期约束和验收标准变化须经用户确认；已获授权实现造成的过期事实按 project-finish 同步修正，不额外进行形式确认。优先引用已有事实来源，避免维护多份易变状态。
 - 不要在 `.ai/PROJECT.md` 里维护任务列表——Seed Tasks 只用于启动，后续 Next 写在 commit message。
 
 ---
